@@ -13,15 +13,14 @@ const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
 
 export default function AppBar(props) {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <StyledAppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ pl: 1, pr: 1}}>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
           >
             <MenuIcon />
           </IconButton>

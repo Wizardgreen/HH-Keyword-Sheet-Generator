@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 const Header = (props) => {
   const { title, children } = props;
 
   return (
-    <Box sx={{ pt: 1, pr: 2, pb: 1, pl: 2}} display="grid" gap={1}>
+    <Grid sx={{ pt: 0.5, pr: 1, pb: 0.5, pl: 1}} display="grid" gap={1}>
       <Typography variant='h1'>{ title }</Typography>
       {children}
-    </Box>
+    </Grid>
   );
 };
 

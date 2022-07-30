@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, getDoc, doc } from 'firebase/firestore';
 
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 
 import { KEYWORD, METADATA, LAST_UPDATE } from './constants';
 

@@ -1,17 +1,16 @@
 import { Outlet } from 'react-router-dom';
-import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 
 import AppBar from '@components/AppBar';
 
-
 const Layout = (props) => {
   return (
     <Container maxWidth="sm" disableGutters>
-      <Box sx={{ height: '100vh' }}>
+      <Grid container direction="column" sx={{ height: '100vh' }}>
         <AppBar title="123" />
         <Outlet />
-      </Box>
+      </Grid>
     </Container>
   );
 };

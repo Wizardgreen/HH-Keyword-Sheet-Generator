@@ -1,11 +1,13 @@
 import { useState, useMemo }from 'react';
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-import isEmpty from 'lodash/isEmpty';
+import {isEmpty} from 'lodash-es';
 
 import Header from '@components/Header';
 import RuleList from '@components/RuleList';
@@ -28,57 +30,60 @@ const TabWrapper = styled(Box)(({theme}) => ({
   }
 }));
 
-
 const Search = (props) => {
   const [tab, setTab] = useState(tabSetting[0].value);
-  const [data, loading] = useKeyword();
+  const [data, completed] = useKeyword();
 
   const dropdownOptionMap = useMemo(() => {
     const payload = {};
-    if (loading) return payload;
+    if (!completed) return payload;
     const types = Object.keys(data);
     types.forEach((type) => {
       const keys = Object.keys(data[type]);
       payload[type] = keys.map((key) => ({value: key, label: data[type][key][0]}));
     });
     return payload;
-  }, [data, loading]);
+  }, [data, completed]);
 
   const handleTabChange = (event, newValue) => {
     setTab(newValue);
   };
 
   return (
-    <Box className="search">data
-      <Header title="123">
-        {!isEmpty(dropdownOptionMap) && (
-          <Autocomplete
-            options={dropdownOptionMap[tab]}
-            getOptionLabel={(option) => option.label}
-            renderInput={(params) => (<TextField {...params} hiddenLabel />)}
-          />
-        )}
-      </Header>
-      <TabWrapper>
-        <Tabs
-          value={tab}
-          onChange={handleTabChange}
-          variant="fullWidth"
-          textColor="inherit"
-          indicatorColor="secondary"
-          aria-label="secondary tabs example"
-        >
-          {tabSetting.map((option) => (
-            <Tab
-              value={option.value}
-              label={option.label}
-              key={option.label}
+    <Grid className="search" container direction="column" item xs>
+      <Grid item>
+        <Header title="123">
+          {!isEmpty(dropdownOptionMap) && (
+            <Autocomplete
+              options={dropdownOptionMap[tab]}
+              getOptionLabel={(option) => option.label}
+              renderInput={(params) => (<TextField {...params} hiddenLabel />)}
             />
-          ))}
-        </Tabs>
-      </TabWrapper>
-      { !loading && <RuleList data={data[tab]}/> }
-    </Box>
+          )}
+        </Header>
+      </Grid>
+      <Grid item>
+        <TabWrapper>
+          <Tabs
+            value={tab}
+            onChange={handleTabChange}
+            variant="fullWidth"
+            textColor="inherit"
+            indicatorColor="secondary"
+            aria-label="secondary tabs example"
+          >
+            {tabSetting.map((option) => (
+              <Tab
+                value={option.value}
+                label={option.label}
+                key={option.label}
+              />
+            ))}
+          </Tabs>
+        </TabWrapper>
+      </Grid>
+      { completed && <RuleList data={data[tab]}/> }
+    </Grid>
   );
 };
 
